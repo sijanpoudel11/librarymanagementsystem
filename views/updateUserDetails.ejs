@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="jumbotron">
+            
+
+         <%  if(user){ %>
+            <form action="/updateUser/<%= user._id %>" method="post" >
+                <div class="form-group">
+                    <label for="tittle">Name</label>
+                    <input type="text " class="form-control" name="name" id="name" value="<%= user.name %>">
+                </div>
+                <div class="form-group">
+                    <label for="author">Address</label>
+                    <input type="text " class="form-control" name="address" id="address" value="<%= user.address %>">
+                </div>
+                <div class="form-group">
+                    <label for="totalBooks">Contacts</label>
+                    <input type="text " class="form-control" name="contacts" id="contacts" value="<%= user.contacts %>">
+                </div>
+                <div class="form-group">
+                    <label for="available">Joined Year</label>
+                    <input type="text " class="form-control" name="joinedYear" id="joinedYear" value="<%= user.joinedYear %>">
+                </div>
+                <div class="form-group">
+                    <label for="available">Evaluation</label>
+                    <input type="text " class="form-control" name="evaluation" id="evaluation" value="<%= user.evaluation %>">
+                </div>
+                <hr>
+                <br>
+                <button type="submit" id="submit" class="btn btn-success">Update</button>      <button type="button" class="btn btn-danger" id="cancel">Cancel</button>
+
+
+            </form>
+
+         <%   } %>
+        </div>
+    </div>
+    <script>
+        var names = document.getElementById('name');
+        var address = document.getElementById('address');
+        var contacts = document.getElementById('contacts');
+        var joinedYear = document.getElementById('joinedYear');
+        var evaluation = document.getElementById('evaluation');
+        var submitButton = document.getElementById('submit');
+        var cancelButton = document.getElementById('cancel');
+        submitButton.setAttribute("disabled","true");
+
+       names.onchange = function(){
+           myfunction()
+       };
+       address.onchange = function(){
+           myfunction()
+       };
+       contacts.onchange = function(){
+           myfunction()
+       };
+      
+        joinedYear.onchange = function(){
+           myfunction()
+       };
+        evaluation.onchange = function(){
+           myfunction()
+       };
+      cancelButton.onclick = function(){
+        window.history.back();
+      };
+
+       function myfunction(){
+submitButton.removeAttribute("disabled");
+       }
+    </script>
+</body>
+</html>

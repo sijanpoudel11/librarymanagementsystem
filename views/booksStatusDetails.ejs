@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="jumbotron">
+            
+
+         <%  if(books){ %>
+            <form action="/bookStatus/updateBooks/<%= books._id %>" method="post" >
+                <div class="form-group">
+                    <label for="tittle">BookTittle</label>
+                    <input type="text " class="form-control" name="tittle" id="tittle" value="<%= books.tittle %>">
+                </div>
+                <div class="form-group">
+                    <label for="author">Author</label>
+                    <input type="text " class="form-control" name="author" id="author" value="<%= books.author %>">
+                </div>
+                <div class="form-group">
+                    <label for="totalBooks">totalBooks</label>
+                    <input type="text " class="form-control" name="totalBooks" id="totalBooks" value="<%= books.numberOfBooks %>">
+                </div>
+                <div class="form-group">
+                    <label for="available">available</label>
+                    <input type="text " class="form-control" name="available" id="available" value="<%= books.available %>">
+                </div>
+                <hr>
+                <br>
+                <button type="submit" id="submit" class="btn btn-success">Update</button>      <button type="button" class="btn btn-danger" id="cancel">Cancel</button>
+
+
+            </form>
+
+         <%   } %>
+        </div>
+    </div>
+    <script>
+        var tittle = document.getElementById('tittle');
+        var author = document.getElementById('author');
+        var totalBooks = document.getElementById('totalBooks');
+        var available = document.getElementById('available');
+        var submitButton = document.getElementById('submit');
+        var cancelButton = document.getElementById('cancel');
+        submitButton.setAttribute("disabled","true");
+
+       tittle.onchange = function(){
+           myfunction()
+       };
+       author.onchange = function(){
+           myfunction()
+       };
+       totalBooks.onchange = function(){
+           myfunction()
+       };
+       available.onchange = function(){
+           myfunction()
+       };
+      cancelButton.onclick = function(){
+        window.history.back();
+      };
+
+       function myfunction(){
+submitButton.removeAttribute("disabled");
+       }
+    </script>
+</body>
+</html>

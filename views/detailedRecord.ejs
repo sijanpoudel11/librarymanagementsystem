@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Record</title>
+</head>
+<body>
+    <h4>Detailed Record For Record <%= record._id %></h4>
+    <hr>  
+
+    <% if(limit == true){ %>
+
+        <h3 style="color: red;">The Submission Deadline Is Over For This Borrow</h3>
+        <% } %>
+    <li><%= record._id %></li>
+    <li><%= record.bookid.tittle  %></li>
+    <li><%=  record.bookid.author  %></li>
+    <li><%=  record.userid.name  %></li>
+    <li><%=  record.userid.address  %></li>
+    <li><%=  record.userid.contacts  %></li>
+    <li><%=  record.userid.evaluation  %></li>
+    <li><%= record.submissionDeadline %></li>
+    <li><%= record.deadlineExtended %></li>
+
+
+
+<hr>
+
+    <a href="/completedReturn/<%= record._id %>">Completed Return</a>
+    <% if(record.deadlineExtended == false){ %>
+        <a href="/extendDeadline/<%= record._id %>" >Extend Deadline</a>
+  <%   } %>
+    
+ 
+</body>
+</html>

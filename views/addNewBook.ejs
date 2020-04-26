@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Books</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <div class="container">  <h4>Add New Books To The Library</h4>
+    <a href="/dashboard" class="bg-success">Dashboard</a>
+    <div class="jumbotron"> <form action="/addNewBook" method="post">
+        <div class="form-groum"> <label for="booktittle">BookTittle</label>
+        <input type="text" name="tittle" class="form-control"></div>
+       <div class="form-group"><label for="author">Author</label>
+        <input type="text" name="author" class="form-control"></div>
+        <div class="form-group"> <label for="publishedYear">Published Year</label>
+        <input type="text" name="publishedYear" class="form-control"></div>
+       <div class="form-group"> <label for="numberOfBooks">Number Of Books </label>
+        <input type="number" name="numberOfBooks" class="form-control"><br></div>
+       
+        <button type="submit" class="btn btn-success">Add </button>
+    </form></div></div>
+  
+   
+
+</body>
+
+</html>

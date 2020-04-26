@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <title>AllUsers</title>
+</head>
+
+<body>
+    <div class="container">
+        <h4> All Users</h4>
+        
+        <% if(messege.length > 0){ %>
+        <div class="alert alert-success"> <%= messege %> </div>
+
+        <% } %>
+        <hr>
+        <div class="jumbotron-fluid">
+            <a href="/dashboard" style="background-color: darkseagreen; color: black; padding: 10px; ">Dashboard</a><br>
+            <hr>
+            <% if(users.length > 0){ %>
+            <table class="table table-hover ">
+                <thead>
+                    <tr class="bg-primary">
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Contacts </th>
+                        <th>Joined Year </th>
+                        <th>Evaluation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% users.forEach(function(user){ %>
+                    <tr class="bg-success">
+                        <th scope="row"><a href="/updateUser/<%= user._id %>"><%= user.name %></a></th>
+                        <td><%= user.address %></td>
+                        <td><%= user.contacts  %></td>
+                        <td><%= user.joinedYear  %></td>
+                        <td><%= user.evaluation  %></td>
+
+
+
+
+
+
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <% } %>
+    <script>
+        function back() {
+            window.history.back();
+        }
+    </script>
+</body>
+
+</html>
