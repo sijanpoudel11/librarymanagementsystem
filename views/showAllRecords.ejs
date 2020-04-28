@@ -11,7 +11,20 @@
 
 <body>
     <% if(records.length > 0){ %>
- <table class="table table-hover">
+        <% if(!completed){ %>
+            
+        <ul style="margin-top: 20px;" class="nav nav-pills">
+            <li class="active"  ><a href="#">Not Completed</a></li>
+            <li><a href="/showAllRecords/completed">Completed</a></li>
+          </ul>
+          <%  }else{ %>
+            <ul style="margin-top: 20px;" class="nav nav-pills">
+                <li   ><a href="/showAllRecords">Not Completed</a></li>
+                <li class="active" ><a href="#">Completed</a></li>
+              </ul>
+            <% } %>
+            <hr>
+            <div class="jumbotron"><table class="table table-hover">
         <thead>   <tr class=" bg-success">
             <th>Record id</th>
             <th>Book Tittle</th>
@@ -20,9 +33,11 @@
             <th>Member Address</th>
             <th>Member Contacts</th>
             <th>Member Evaluation</th>
+            <% if(!completed){ %>
             <th>submission Deadline</th>
             <th></th>
             <th></th>
+            <% } %>
 
         </tr></thead>
 
@@ -35,11 +50,12 @@
             <td><%=  record.userid.address  %></td>
             <td><%=  record.userid.contacts  %></td>
             <td><%=  record.userid.evaluation  %></td>
+            <% if(!completed){ %>
             <td><%= record.submissionDeadline %></td>
             <td><%= record.deadlineExtended %></td>
 
             <td class="bg-success"><a href="/updateRecord/<%= record._id %>">update record</a></td>
-
+                <% } %>
         </tr>
         <% }) %>
 </tbody>
@@ -50,6 +66,7 @@
 
       
     </table></div>
+ 
    
   <% } %>
 

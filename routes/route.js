@@ -4,15 +4,32 @@ var bookSchema = require("../models/bookschema");
 var membersSchema = require("../models//userschema");
 var recordSchema = require("../models/recordschema");
 var auth = require("../passport/auth");
-var bcrypt = require('bcryptjs');
+var bcrypt = require("bcryptjs");
 var passport = require("passport");
 var mongoose = require("mongoose");
 
 router.get("/", auth.redirectdashboard, (req, res) => {
-  res.render("home",{messege: req.flash("loginerror")});
+  res.render("home", { messege: req.flash("loginerror") });
 });
 
+router.get("/test", (req, res) => {
+  recordSchema.aggregate([
+    { $match : {
+      completed : false
+    }},
+   
+    { $group : {_id :{userid: "$userid",deadline : "$deadlineExtended"},sum :{$sum : 1}}}
 
+  ],
+  function(err, result) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(result);
+    }
+  })
+  
+});
 
 // ROUTE TO ADMIN CREATE PAGE
 router.get("/createnewadmin", (req, res) => {
@@ -41,8 +58,7 @@ router.post("/createnewadmin", (req, res) => {
     });
 });
 
-router.post(
-  "/login",
+router.post("/login",
   passport.authenticate("login", {
     successRedirect: "/dashboard",
     failureRedirect: "/",
@@ -108,16 +124,19 @@ router.post("/addNewMember", (req, res) => {
     });
 });
 
-
 router.get("/manageExistingMembers", (req, res) => {
-membersSchema.find({})
-.exec()
-.then(users=>{
-  res.render('allUsers',{messege : req.flash("updateSuccess"), users:users});
-})
-.catch(err=>{
-  res.send(err);
-})
+  membersSchema
+    .find({})
+    .exec()
+    .then((users) => {
+      res.render("allUsers", {
+        messege: req.flash("updateSuccess"),
+        users: users,
+      });
+    })
+    .catch((err) => {
+      res.send(err);
+    });
 });
 
 router.get("/issueNewBorrow", (req, res) => {
@@ -223,7 +242,22 @@ router.get("/showAllRecords", (req, res) => {
     .sort({ submissionDeadline: 1 })
     .exec()
     .then((records) => {
-      res.render("showAllRecords", { records: records });
+      res.render("showAllRecords", { records: records ,completed:false});
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+router.get("/showAllRecords/completed", (req, res) => {
+  recordSchema
+    .find({})
+    .where({ completed: true })
+    .populate("bookid")
+    .populate("userid")
+    .sort({ submissionDeadline: 1 })
+    .exec()
+    .then((records) => {
+      res.render("showAllRecords", { records: records, completed: true });
     })
     .catch((err) => {
       res.send(err);
@@ -356,44 +390,44 @@ router.post("/bookStatus/updateBooks/:id", (req, res) => {
     });
 });
 
-router.get("/updateUser/:id",(req,res)=>{
+router.get("/updateUser/:id", (req, res) => {
   var userid = req.params.id;
 
-  membersSchema.findById(userid)
-  .exec()
-  .then(user=>{
-    res.render('updateUserDetails',{user : user});
-  })
-  .catch(err=>{
-    res.send(err);
-
-  })
+  membersSchema
+    .findById(userid)
+    .exec()
+    .then((user) => {
+      res.render("updateUserDetails", { user: user });
+    })
+    .catch((err) => {
+      res.send(err);
+    });
 });
 
-router.post("/updateUser/:id",(req,res)=>{
+router.post("/updateUser/:id", (req, res) => {
   var id = req.params.id;
-  membersSchema.findByIdAndUpdate(id,
-    {$set:{
-    name : req.body.name,
-    address : req.body.address,
-    contacts : req.body.contacts,
-    joinerYear : req.body.joinedYear,
-    evaluation : req.body.evaluation
-  },
-},{new:true}
-)
-.then(user=>{
-  console.log(user);
-  req.flash("updateSuccess","UserDetails Succesfully Updated");
-  res.redirect(301,"/manageExistingMembers");
-})
-.catch(err=>{
-  res.send(err);
-})
-
-
-})
-
-
+  membersSchema
+    .findByIdAndUpdate(
+      id,
+      {
+        $set: {
+          name: req.body.name,
+          address: req.body.address,
+          contacts: req.body.contacts,
+          joinerYear: req.body.joinedYear,
+          evaluation: req.body.evaluation,
+        },
+      },
+      { new: true }
+    )
+    .then((user) => {
+      console.log(user);
+      req.flash("updateSuccess", "UserDetails Succesfully Updated");
+      res.redirect(301, "/manageExistingMembers");
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
 
 module.exports = router;
